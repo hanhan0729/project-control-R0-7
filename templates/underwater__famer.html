@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>水下系统 - underwater</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://img1.baidu.com/it/u=2618041115,190904913&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        a {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>水下系统</h1>
+    </header>
+    <main>
+        <p>这是水下系统页面的内容。</p>
+        </tbody>
+<form action="/your-flask-route" method="post">
+        <!-- 第一个下拉框：选择第一列的不同数据 -->
+    <label for="col1_select">选择第一列的值：</label>
+    <select id="col1_select" name="col1_select">
+        {% for value in col1_options %}
+            <option value="{{ value }}">{{ value }}</option>
+        {% endfor %}
+    </select>
+
+    <!-- 第二个下拉框：选择列标题 -->
+    <label for="header_select">选择列标题：</label>
+    <select id="header_select" name="header_select">
+        {% for header in header_options %}
+            <option value="{{ header }}">{{ header }}</option>
+        {% endfor %}
+    </select>
+
+
+
+    <!-- 提交按钮 -->
+    <button onclick="generateChart()">生成图表</button>
+</form>
+    <!-- 图表容器 -->
+    <div id="chart"></div>
+
+    <script>
+document.getElementById('dataForm').onsubmit = function(event) {
+    event.preventDefault(); // 阻止表单的默认提交行为
+
+    const col1Value = document.getElementById('col1_select').value;
+    const headerValue = document.getElementById('header_select').value;
+
+    // 发送AJAX请求到服务器
+    fetch('/submit-form', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ col1_select: col1Value, header_select: headerValue }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        // 这里可以添加处理服务器响应的代码
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+};
+</script>
+<style>
+    .button-container {
+        display: flex;
+    }
+
+    .button-container a {
+        margin-right: 10px; /* 可以根据需要调整按钮之间的间距 */
+    }
+    .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 80%;
+        }
+         .left, .center, .right {
+            flex: 1;
+            margin: 0 1rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        a {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .weather-container, .shouldbe-container, .threshold-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .weather-item, .shouldbe-item, .threshold-item {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+</style>
+<div class="container">
+        <!-- 左侧模块 -->
+        <div class="left">
+    <h2>实时数据展示</h2>
+    {{ table | safe }}
+</div>
+ </div>
+<div class="button-container">
+    <div class="link-list">
+        <a href="/upup">上传水质数据</a>
+    </div>
+    <nav>
+        <a href="/famer">返回养殖户页面</a>
+    </nav>
+</div>
+
+
+    </main>
+</body>
+</html>
